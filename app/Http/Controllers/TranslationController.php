@@ -198,6 +198,53 @@ class TranslationController extends Controller
         return new TranslationResource($translationModel);
     }
 
+#[OA\Get(
+    path: '/api/translations/export',
+    summary: 'Export translations',
+    description: 'Export all translations for the specified locale as a JSON object.',
+    tags: ['Translations'],
+    security: [
+        ['bearerAuth' => []],
+    ],
+    parameters: [
+        new OA\Parameter(
+            name: 'locale',
+            in: 'query',
+            required: true,
+            description: 'Locale code to export',
+            schema: new OA\Schema(
+                type: 'string',
+                example: 'en'
+            )
+        ),
+    ],
+    responses: [
+        new OA\Response(
+            response: 200,
+            description: 'Translations exported successfully',
+            content: new OA\JsonContent(
+                type: 'object',
+                additionalProperties: new OA\AdditionalProperties(
+                    type: 'string'
+                ),
+                example: [
+                    'home.title' => 'Welcome Home',
+                    'home.description' => 'Welcome to our application',
+                    'button.save' => 'Save',
+                ]
+            )
+        ),
+        new OA\Response(
+            response: 401,
+            description: 'Unauthenticated'
+        ),
+        new OA\Response(
+            response: 422,
+            description: 'Validation error'
+        ),
+    ]
+)]
+
     public function export(
         ExportTranslationRequest $request
     ): JsonResponse {
