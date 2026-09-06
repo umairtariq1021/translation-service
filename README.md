@@ -36,7 +36,7 @@ A Laravel-based API for managing translations across multiple locales, with supp
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/umairtariq1021/translation-service.git
 cd translation-service
 ```
 
